@@ -5,11 +5,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class QueryUtils {
     /** Sample JSON response for a USGS query */
@@ -57,15 +53,10 @@ public class QueryUtils {
 
                 String magnitude = properties.getString("mag");
                 String location = properties.getString("place");
-                String time = properties.getString("time");
+                // Extract the value for the key called "time"
+                long time = properties.getLong("time");
 
-                long timeInMilliseconds = Long.parseLong(time);
-                Date dateObject = new Date(timeInMilliseconds);
-
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM DD, yyyy", Locale.US);
-                String dateToDisplay = dateFormatter.format(dateObject);
-
-                Earthquake earthquake = new Earthquake(magnitude,location,dateToDisplay);
+                Earthquake earthquake = new Earthquake(magnitude,location,time);
                 earthquakes.add(earthquake);
             }
 
